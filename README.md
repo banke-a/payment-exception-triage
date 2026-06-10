@@ -1,18 +1,18 @@
 # Payment Exception Triage
 
-An AI-assisted triage layer for payment operations. It takes payment exceptions — transactions that did not complete cleanly — and reasons across conflicting signals from multiple systems to determine what broke, where, who holds the funds, and what to do, then prioritises the queue by expected irreversible loss.
+An AI-assisted triage layer for payment operations. It takes payment exceptions i.e. transactions that did not complete cleanly and reasons across conflicting signals from multiple systems to determine what broke, where, who holds the funds, and what to do, then prioritises the queue by expected irreversible loss.
 
 This is an augmentation tool. The AI clears and prioritises the queue; humans own every decision that moves funds.
 
 ## The problem
 
-As payment flows become more interconnected across banks, mobile money operators, and processors, a single break stops being isolated. A delayed confirmation or a missing status update creates uncertainty across reconciliation, customer experience, and cash flow. At scale, the cost is not that payments fail more often — it is that the cost of not knowing where a payment failed, who holds the funds, and how quickly it can be recovered grows with volume. This is a hidden tax on growth.
+As payment flows become more interconnected across banks, mobile money operators, and processors, a single break stops being isolated. A delayed confirmation or a missing status update creates uncertainty across reconciliation, customer experience, and cash flow. At scale, the cost is not that payments fail more often, it is that the cost of not knowing where a payment failed, who holds the funds, and how quickly it can be recovered grows with volume. This is a hidden tax on growth.
 
 Exception triage is where that uncertainty is resolved, one case at a time. It is high volume, requires reasoning across messy multi-source data, and is slow and inconsistent when done manually. That makes it well suited to an AI augmentation layer.
 
 ## The prioritisation model
 
-The core design decision in this tool is how it prioritises a queue. The naive approach — work the biggest amount first — is wrong, because a large amount sitting safely is not urgent, while a medium amount about to become permanently unrecoverable is.
+The core design decision in this tool is how it prioritises a queue. The naive approach, work the biggest amount first, is wrong, because a large amount sitting safely is not urgent, while a medium amount about to become permanently unrecoverable is.
 
 Priority is modelled as **expected irreversible loss**:
 
@@ -22,7 +22,7 @@ priority = P(unrecoverable) × value_at_risk × (1 + customer_impact)
 
 - **P(unrecoverable)** is a recoverability hazard. Ageing is the time term inside it: as the recovery window closes, the probability of permanent loss rises. This mirrors how a time horizon sits inside a probability of default.
 - **value_at_risk** is the exposure currently in limbo.
-- The product of the two is the expected loss — the irreversible-loss core.
+- The product of the two is the expected loss - the irreversible-loss core.
 - **customer_impact** is an overlay modifier. It can escalate a case but cannot manufacture priority where expected loss is near zero.
 
 Because the core is multiplicative, a high value with negligible recoverability risk cannot mask its way to the top of the queue. That is the property that makes the prioritisation defensible rather than a black-box score.

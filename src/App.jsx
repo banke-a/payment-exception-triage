@@ -217,7 +217,6 @@ export default function ExceptionTriage() {
             <div className="header-title">Exception Triage</div>
             <div className="header-sub">Payment Operations — Expected Loss Prioritisation</div>
           </div>
-          <div className="header-badge">Powered by Claude</div>
         </header>
 
         <div className="toolbar">
