@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment variables — NEVER commit these
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+.netlify/
+
+# Editor / OS
+.DS_Store
+*.log
+.vscode/
+.idea/
