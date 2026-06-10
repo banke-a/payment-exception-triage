@@ -76,8 +76,8 @@ const styles = `
 
   .toolbar { padding: 20px 32px; border-bottom: 1px solid #E0DDD8; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
   .toolbar-left { display: flex; flex-direction: column; gap: 2px; }
-  .toolbar-title { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #888580; }
-  .toolbar-desc { font-size: 12px; color: #888580; }
+  .toolbar-title { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #1A1A1A; }
+  .toolbar-desc { font-size: 12px; color: #1A1A1A; }
   .run-btn { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px 24px; background: #0A1628; color: #F7F7F5; border: 1px solid #0A1628; cursor: pointer; transition: background 0.15s; }
   .run-btn:hover:not(:disabled) { background: #1a2d4a; }
   .run-btn:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -85,7 +85,7 @@ const styles = `
   .summary-bar { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 1px solid #E0DDD8; }
   .summary-cell { padding: 18px 24px; border-right: 1px solid #E0DDD8; }
   .summary-cell:last-child { border-right: none; }
-  .summary-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #888580; margin-bottom: 6px; }
+  .summary-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #1A1A1A; margin-bottom: 6px; }
   .summary-value { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: #0F0F0F; }
   .summary-value.loss { color: #C0392B; }
 
@@ -94,42 +94,42 @@ const styles = `
   .queue-item { padding: 16px 24px; border-bottom: 1px solid #F0EDE8; cursor: pointer; transition: background 0.12s; }
   .queue-item:hover { background: #F2F1EE; }
   .queue-item.active { background: #EEF0F5; border-left: 3px solid #0A1628; }
-  .queue-item.pending { opacity: 0.55; }
+  .queue-item.pending { opacity: 0.85; }
   .queue-item-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
   .queue-ref { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: #0F0F0F; }
   .queue-band { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; padding: 2px 7px; }
   .band-P1_CRITICAL { background: #FBEAE8; color: #C0392B; }
   .band-P2_HIGH { background: #FBF1E2; color: #B7770D; }
   .band-P3_STANDARD { background: #EAF3EE; color: #1A7F4B; }
-  .queue-label { font-size: 12px; color: #555; margin-bottom: 6px; line-height: 1.4; }
-  .queue-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: #999; letter-spacing: 0.03em; }
-  .queue-pending-tag { font-family: 'DM Mono', monospace; font-size: 10px; color: #B0ADA8; letter-spacing: 0.05em; }
+  .queue-label { font-size: 12px; color: #0F0F0F; margin-bottom: 6px; line-height: 1.4; }
+  .queue-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: #2A2A2A; letter-spacing: 0.03em; }
+  .queue-pending-tag { font-family: 'DM Mono', monospace; font-size: 10px; color: #2A2A2A; letter-spacing: 0.05em; }
 
   .detail-panel { padding: 28px 32px; overflow-y: auto; }
   .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; gap: 8px; }
-  .empty-title { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #B0ADA8; }
-  .empty-sub { font-size: 12px; color: #C8C5BF; max-width: 260px; text-align: center; line-height: 1.5; }
+  .empty-title { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #2A2A2A; }
+  .empty-sub { font-size: 12px; color: #2A2A2A; max-width: 260px; text-align: center; line-height: 1.5; }
 
   .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; gap: 16px; }
   .loading-bar { width: 160px; height: 2px; background: #E0DDD8; overflow: hidden; }
   .loading-inner { height: 100%; background: #0A1628; width: 40%; animation: ld 1.4s ease-in-out infinite; }
   @keyframes ld { 0% { transform: translateX(-100%); } 100% { transform: translateX(350%); } }
-  .loading-text { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #888580; }
+  .loading-text { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #1A1A1A; }
 
   .d-header { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #E0DDD8; }
   .d-ref { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-  .d-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: #888580; letter-spacing: 0.04em; }
-  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #888580; margin: 22px 0 10px; }
+  .d-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: #1A1A1A; letter-spacing: 0.04em; }
+  .section-title { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #1A1A1A; margin: 22px 0 10px; }
 
   .classification-row { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
   .classification-label { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; color: #0F0F0F; }
-  .confidence-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.06em; padding: 2px 8px; border: 1px solid #C8C5BF; color: #888580; }
+  .confidence-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.06em; padding: 2px 8px; border: 1px solid #2A2A2A; color: #1A1A1A; }
 
   .score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #E0DDD8; border: 1px solid #E0DDD8; margin-bottom: 4px; }
   .score-cell { background: #FAFAF8; padding: 14px 16px; }
   .score-cell.full { grid-column: 1 / -1; }
   .score-cell.expected { background: #FDF5F4; }
-  .score-cell-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: #888580; margin-bottom: 6px; }
+  .score-cell-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: #1A1A1A; margin-bottom: 6px; }
   .score-cell-value { font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 500; color: #0F0F0F; margin-bottom: 4px; }
   .score-cell-value.risk { color: #C0392B; }
   .score-cell-note { font-size: 12px; color: #555; line-height: 1.5; }
@@ -137,7 +137,7 @@ const styles = `
   .formula { font-family: 'DM Mono', monospace; font-size: 11px; color: #6B7E9C; background: #0A1628; color: #C8D3E4; padding: 10px 14px; letter-spacing: 0.03em; margin-bottom: 4px; }
 
   .signal-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  .signal-table th { text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: #888580; padding: 6px 8px; border-bottom: 1px solid #E0DDD8; font-weight: 500; }
+  .signal-table th { text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: #1A1A1A; padding: 6px 8px; border-bottom: 1px solid #E0DDD8; font-weight: 500; }
   .signal-table td { padding: 8px; border-bottom: 1px solid #F0EDE8; vertical-align: top; line-height: 1.4; color: #2A2A2A; }
   .signal-system { font-family: 'DM Mono', monospace; font-size: 11px; color: #0A1628; white-space: nowrap; }
 
@@ -157,7 +157,7 @@ const styles = `
   .routing-tag.auto { color: #1A7F4B; }
   .routing-reason { font-size: 12px; color: #555; }
 
-  .notice { font-family: 'DM Mono', monospace; font-size: 10px; color: #B0ADA8; letter-spacing: 0.04em; padding: 14px 32px; border-top: 1px solid #E0DDD8; line-height: 1.5; }
+  .notice { font-family: 'DM Mono', monospace; font-size: 10px; color: #2A2A2A; letter-spacing: 0.04em; padding: 14px 32px; border-top: 1px solid #E0DDD8; line-height: 1.5; }
 
   @media (max-width: 1000px) { .main { grid-template-columns: 1fr; } .queue-panel { border-right: none; border-bottom: 1px solid #E0DDD8; max-height: 320px; } .summary-bar { grid-template-columns: repeat(2, 1fr); } }
 `;
@@ -333,7 +333,7 @@ export default function ExceptionTriage() {
                       <tr key={i}>
                         <td className="signal-system">{s.system}</td>
                         <td>{s.status}</td>
-                        <td style={{ color: "#555" }}>{s.interpretation}</td>
+                        <td style={{ color: "#1A1A1A" }}>{s.interpretation}</td>
                       </tr>
                     ))}
                   </tbody>
