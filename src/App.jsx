@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const CORRECT_PIN = "348750";
+
 // Synthetic exception queue — conflicting multi-system signals per case.
 const SAMPLE_QUEUE = [
   {
@@ -132,20 +134,20 @@ const styles = `
   .score-cell-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: #1A1A1A; margin-bottom: 6px; }
   .score-cell-value { font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 500; color: #0F0F0F; margin-bottom: 4px; }
   .score-cell-value.risk { color: #C0392B; }
-  .score-cell-note { font-size: 12px; color: #555; line-height: 1.5; }
+  .score-cell-note { font-size: 12px; color: #1A1A1A; line-height: 1.5; }
 
-  .formula { font-family: 'DM Mono', monospace; font-size: 11px; color: #6B7E9C; background: #0A1628; color: #C8D3E4; padding: 10px 14px; letter-spacing: 0.03em; margin-bottom: 4px; }
+  .formula { font-family: 'DM Mono', monospace; font-size: 11px; background: #0A1628; color: #C8D3E4; padding: 10px 14px; letter-spacing: 0.03em; margin-bottom: 4px; }
 
   .signal-table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .signal-table th { text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: #1A1A1A; padding: 6px 8px; border-bottom: 1px solid #E0DDD8; font-weight: 500; }
-  .signal-table td { padding: 8px; border-bottom: 1px solid #F0EDE8; vertical-align: top; line-height: 1.4; color: #2A2A2A; }
+  .signal-table td { padding: 8px; border-bottom: 1px solid #F0EDE8; vertical-align: top; line-height: 1.4; color: #1A1A1A; }
   .signal-system { font-family: 'DM Mono', monospace; font-size: 11px; color: #0A1628; white-space: nowrap; }
 
-  .reasoning-box, .funds-box { font-size: 13px; color: #333; line-height: 1.6; padding: 14px 16px; background: #FAFAF8; border: 1px solid #E0DDD8; }
+  .reasoning-box, .funds-box { font-size: 13px; color: #1A1A1A; line-height: 1.6; padding: 14px 16px; background: #FAFAF8; border: 1px solid #E0DDD8; }
   .funds-box { border-left: 3px solid #0A1628; }
 
   .resolution-list { list-style: none; counter-reset: step; }
-  .resolution-list li { position: relative; padding: 8px 0 8px 32px; font-size: 13px; color: #333; line-height: 1.5; border-bottom: 1px solid #F0EDE8; counter-increment: step; }
+  .resolution-list li { position: relative; padding: 8px 0 8px 32px; font-size: 13px; color: #1A1A1A; line-height: 1.5; border-bottom: 1px solid #F0EDE8; counter-increment: step; }
   .resolution-list li:last-child { border-bottom: none; }
   .resolution-list li::before { content: counter(step); position: absolute; left: 0; top: 8px; font-family: 'DM Mono', monospace; font-size: 11px; width: 20px; height: 20px; line-height: 20px; text-align: center; background: #0A1628; color: #fff; }
 
@@ -155,9 +157,25 @@ const styles = `
   .routing-tag { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
   .routing-tag.human { color: #B7770D; }
   .routing-tag.auto { color: #1A7F4B; }
-  .routing-reason { font-size: 12px; color: #555; }
+  .routing-reason { font-size: 12px; color: #1A1A1A; }
 
   .notice { font-family: 'DM Mono', monospace; font-size: 10px; color: #2A2A2A; letter-spacing: 0.04em; padding: 14px 32px; border-top: 1px solid #E0DDD8; line-height: 1.5; }
+
+  .pin-input {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 11px 14px;
+    border: 1px solid #C8C5BF;
+    background: #FAFAF8;
+    color: #0F0F0F;
+    width: 110px;
+    outline: none;
+    letter-spacing: 0.1em;
+    transition: border-color 0.15s;
+  }
+  .pin-input:focus { border-color: #0A1628; }
+  .pin-input.error { border-color: #C0392B; }
+  .pin-error { font-family: 'DM Mono', monospace; font-size: 10px; color: #C0392B; letter-spacing: 0.06em; }
 
   @media (max-width: 1000px) { .main { grid-template-columns: 1fr; } .queue-panel { border-right: none; border-bottom: 1px solid #E0DDD8; max-height: 320px; } .summary-bar { grid-template-columns: repeat(2, 1fr); } }
 `;
@@ -169,6 +187,8 @@ export default function ExceptionTriage() {
   const [loadingId, setLoadingId] = useState(null);
   const [activeId, setActiveId] = useState(null);
   const [runningAll, setRunningAll] = useState(false);
+  const [pin, setPin] = useState("");
+  const [pinError, setPinError] = useState(false);
 
   const triageOne = async (item) => {
     setLoadingId(item.id);
@@ -190,6 +210,11 @@ export default function ExceptionTriage() {
   };
 
   const runAll = async () => {
+    if (pin !== CORRECT_PIN) {
+      setPinError(true);
+      return;
+    }
+    setPinError(false);
     setRunningAll(true);
     for (const item of SAMPLE_QUEUE) {
       await triageOne(item);
@@ -217,6 +242,7 @@ export default function ExceptionTriage() {
             <div className="header-title">Exception Triage</div>
             <div className="header-sub">Payment Operations — Expected Loss Prioritisation</div>
           </div>
+          <div className="header-badge">Powered by Claude</div>
         </header>
 
         <div className="toolbar">
@@ -224,9 +250,20 @@ export default function ExceptionTriage() {
             <div className="toolbar-title">Exception Queue</div>
             <div className="toolbar-desc">Triage each exception by expected irreversible loss, then route by confidence.</div>
           </div>
-          <button className="run-btn" onClick={runAll} disabled={runningAll}>
-            {runningAll ? "Triaging Queue..." : "Triage Queue"}
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <input
+              type="password"
+              placeholder="PIN"
+              value={pin}
+              className={`pin-input${pinError ? " error" : ""}`}
+              onChange={(e) => { setPin(e.target.value); setPinError(false); }}
+              onKeyDown={(e) => e.key === "Enter" && runAll()}
+            />
+            {pinError && <span className="pin-error">INVALID PIN</span>}
+            <button className="run-btn" onClick={runAll} disabled={runningAll}>
+              {runningAll ? "Triaging Queue..." : "Triage Queue"}
+            </button>
+          </div>
         </div>
 
         <div className="summary-bar">
@@ -286,7 +323,7 @@ export default function ExceptionTriage() {
             {!active && !loadingId && (
               <div className="empty">
                 <div className="empty-title">No exception selected</div>
-                <div className="empty-sub">Run the queue, then select a case to see the triage reasoning and priority breakdown.</div>
+                <div className="empty-sub">Enter PIN, run the queue, then select a case to see the triage reasoning and priority breakdown.</div>
               </div>
             )}
 
